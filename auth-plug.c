@@ -334,25 +334,6 @@ int mosquitto_auth_plugin_init(void **userdata, struct mosquitto_auth_opt *auth_
 		}
 #endif
 
-#if BE_MEMCACHED
-		if (!strcmp(q, "memcached")) {
-			*bep = (struct backend_p *)malloc(sizeof(struct backend_p));
-			memset(*bep, 0, sizeof(struct backend_p));
-			(*bep)->name = strdup("memcached");
-			(*bep)->conf = be_memcached_init();
-			if ((*bep)->conf == NULL) {
-				_fatal("%s init returns NULL", q);
-			}
-			(*bep)->kill =  be_memcached_destroy;
-			(*bep)->getuser =  be_memcached_getuser;
-			(*bep)->superuser =  be_memcached_superuser;
-			(*bep)->aclcheck =  be_memcached_aclcheck;
-			found = 1;
-			ud->fallback_be = ud->fallback_be == -1 ? nord : ud->fallback_be;
-			PSKSETUP;
-		}
-#endif
-
 #if BE_HTTP
 		if (!strcmp(q, "http")) {
 			*bep = (struct backend_p *)malloc(sizeof(struct backend_p));

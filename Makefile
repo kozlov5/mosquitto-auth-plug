@@ -52,17 +52,6 @@ ifneq ($(BACKEND_REDIS),no)
 	BE_LDADD += -lhiredis
 	OBJS += be-redis.o
 endif
-
-ifneq ($(BACKEND_MEMCACHED),no)
-	BACKENDS += -DBE_MEMCACHED
-	BACKENDSTR += Memcached
-
-	BE_CFLAGS += -I/usr/local/include/libmemcached
-	BE_LDFLAGS += -L/usr/local/lib
-	BE_LDADD += -lmemcached
-	OBJS += be-memcached.o
-endif
-
 ifneq ($(BACKEND_POSTGRES),no)
 	BACKENDS += -DBE_POSTGRES
 	BACKENDSTR += PostgreSQL
